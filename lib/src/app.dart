@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gift_fund/src/features/main/main_screen.dart';
+import 'package:gift_fund/src/features/main/screens/main_screen.dart';
+import 'package:gift_fund/src/features/reminders/reminders_screen.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -7,12 +8,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Gift Fund',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MainScreen(),
+      initialRoute: "/",
+      routes: {
+        "/": (ctx) => const MainScreen(),
+        "/reminders": (ctx) => const RemindersScreen(),
+      },
     );
   }
 }

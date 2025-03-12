@@ -22,6 +22,9 @@ migrate_working_dir/
 #.vscode/
 
 .fvm/flutter_sdk
+.fvm/versions
+.fvm/release
+.fvm/version
 
 # Flutter/Dart/Pub related
 **/doc/api/

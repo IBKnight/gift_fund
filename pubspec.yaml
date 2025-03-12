@@ -14,6 +14,7 @@ dependencies:
 
   cupertino_icons: ^1.0.8
   flutter_svg: ^2.0.17
+  google_fonts: ^6.2.1
 
 dev_dependencies:
   flutter_test:
@@ -22,14 +23,15 @@ dev_dependencies:
   flutter_lints: ^4.0.0
   build_runner: ^2.4.13
   flutter_gen: ^5.10.0
+  flutter_gen_runner:
+
 
 flutter_gen:
+  output: lib/gen/
   integrations:
     flutter_svg: true
 
 flutter:
-  generate: true
-
   assets:
     - assets/icons/
 

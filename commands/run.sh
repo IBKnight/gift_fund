@@ -7,4 +7,4 @@ echo "Running flutter pub get..."
 fvm flutter pub get
 
 echo "Running build_runner build..."
-fvm flutter pub run build_runner build --delete-conflicting-outputs
+fvm dart run build_runner build --delete-conflicting-outputs
