@@ -2,8 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gift_fund/gen/assets.gen.dart';
 import 'package:gift_fund/src/common/palette.dart';
+import 'package:gift_fund/src/features/main/screens/diagram_screen.dart';
 import 'package:gift_fund/src/features/main/screens/holiday_planners_screen.dart';
 import 'package:gift_fund/src/features/main/screens/recepients_screen.dart';
+import 'package:gift_fund/src/features/main/screens/settings_screen.dart';
 import 'package:gift_fund/src/features/main/widgets/custom_nav_bar_item.dart';
 
 class MainScreen extends StatefulWidget {
@@ -99,8 +101,8 @@ class _MainScreenState extends State<MainScreen> {
           children: const [
             HolidayPlannersScreen(),
             RecepientsScreen(),
-            HolidayPlannersScreen(),
-            HolidayPlannersScreen(),
+            DiagramScreen(),
+            SettingsScreen(),
           ],
         ),
       ),
