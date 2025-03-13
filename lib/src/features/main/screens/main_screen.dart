@@ -1,11 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gift_fund/gen/assets.gen.dart';
 import 'package:gift_fund/src/common/palette.dart';
-import 'package:gift_fund/src/common/strings.dart';
-import 'package:gift_fund/src/common/widgets/rounded_colored_box.dart';
 import 'package:gift_fund/src/features/main/screens/holiday_planners_screen.dart';
+import 'package:gift_fund/src/features/main/screens/recepients_screen.dart';
+import 'package:gift_fund/src/features/main/widgets/custom_nav_bar_item.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -33,19 +32,16 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return CupertinoTheme(
-      data: const CupertinoThemeData(),
-      child: Scaffold(
-        backgroundColor: Palette.bgPrimary,
-        appBar: AppBar(
-          backgroundColor: Palette.bgPrimary,
-          title: const Text(
-            Strings.holidayPlanner,
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.w500,
-            ),
+      data: const CupertinoThemeData(
+        textTheme: CupertinoTextThemeData(
+          textStyle: TextStyle(
+            color: Colors.white,
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
           ),
         ),
+      ),
+      child: Scaffold(
         bottomNavigationBar: CupertinoTabBar(
           height: 82,
           backgroundColor: Palette.bgSecondary,
@@ -54,28 +50,36 @@ class _MainScreenState extends State<MainScreen> {
               icon: CustomNavBarItem(
                 selectedIndex: _selectedIndex,
                 index: 0,
-                iconPath: Assets.icons.holiday.path,
+                iconPath: _selectedIndex == 0
+                    ? Assets.icons.holiday.path
+                    : Assets.icons.holidayOutline.path,
               ),
             ),
             BottomNavigationBarItem(
               icon: CustomNavBarItem(
                 selectedIndex: _selectedIndex,
                 index: 1,
-                iconPath: Assets.icons.smileOutline.path,
+                iconPath: _selectedIndex == 1
+                    ? Assets.icons.smile.path
+                    : Assets.icons.smileOutline.path,
               ),
             ),
             BottomNavigationBarItem(
               icon: CustomNavBarItem(
                 selectedIndex: _selectedIndex,
                 index: 2,
-                iconPath: Assets.icons.statistic.path,
+                iconPath: _selectedIndex == 2
+                    ? Assets.icons.diagram.path
+                    : Assets.icons.diagramOutline.path,
               ),
             ),
             BottomNavigationBarItem(
               icon: CustomNavBarItem(
                 selectedIndex: _selectedIndex,
                 index: 3,
-                iconPath: Assets.icons.settingsOutlineSix.path,
+                iconPath: _selectedIndex == 3
+                    ? Assets.icons.settingsSix.path
+                    : Assets.icons.settingsOutlineSix.path,
               ),
             ),
           ],
@@ -83,55 +87,23 @@ class _MainScreenState extends State<MainScreen> {
           onTap: (index) {
             setState(() {
               _selectedIndex = index;
-              _pageController.animateToPage(
+              _pageController.jumpToPage(
                 index,
-                duration: Durations.medium1,
-                curve: Curves.easeInOut,
               );
             });
           },
         ),
         body: PageView(
+          physics: const NeverScrollableScrollPhysics(),
           controller: _pageController,
           children: const [
             HolidayPlannersScreen(),
-            HolidayPlannersScreen(),
+            RecepientsScreen(),
             HolidayPlannersScreen(),
             HolidayPlannersScreen(),
           ],
         ),
       ),
     );
-  }
-}
-
-class CustomNavBarItem extends StatelessWidget {
-  final int selectedIndex;
-  final int index;
-  final String iconPath;
-
-  const CustomNavBarItem({
-    super.key,
-    required this.selectedIndex,
-    required this.index,
-    required this.iconPath,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return RoundedColoredBox(
-        padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 18),
-        bgColor: selectedIndex == index
-            ? Palette.circularIndicatorBg // Цвет фона для выбранной вкладки
-            : Colors.transparent,
-        child: SvgPicture.asset(
-          iconPath,
-          colorFilter: ColorFilter.mode(
-            selectedIndex == index
-                ? Palette.primaryBlue
-                : Palette.sixtyPercWhite,
-            BlendMode.srcIn,
-          ),
-        ));
   }
 }
