@@ -6,11 +6,22 @@ import 'package:gift_fund/src/common/palette.dart';
 import 'package:gift_fund/src/common/strings.dart';
 import 'package:gift_fund/src/common/widgets/rounded_colored_box.dart';
 import 'package:gift_fund/src/features/main/widgets/budget_indicator.dart';
+import 'package:gift_fund/src/features/main/widgets/outlined_cupertino_button.dart';
+import 'package:intl/intl.dart';
 
-class HolidayPlannersScreen extends StatelessWidget {
+class HolidayPlannersScreen extends StatefulWidget {
   const HolidayPlannersScreen({
     super.key,
   });
+
+  @override
+  State<HolidayPlannersScreen> createState() => _HolidayPlannersScreenState();
+}
+
+class _HolidayPlannersScreenState extends State<HolidayPlannersScreen> {
+  final totalBudget = 0;
+  final reminderCount = 5;
+  final expensions = [];
 
   @override
   Widget build(BuildContext context) {
@@ -37,9 +48,9 @@ class HolidayPlannersScreen extends StatelessWidget {
               bgColor: Palette.bgSecondary,
               child: Row(
                 children: [
-                  const BudgetIndicator(
-                    budget: 1400,
-                    currentBudget: 1000,
+                  BudgetIndicator(
+                    budget: totalBudget,
+                    expenses: 0,
                   ),
                   const SizedBox(width: 8),
                   Column(
@@ -56,8 +67,11 @@ class HolidayPlannersScreen extends StatelessWidget {
                       CupertinoButton(
                         color: Palette.accentSecondaryBlue,
                         borderRadius: BorderRadius.circular(20),
-                        child: const Text(Strings.editBudget),
-                        onPressed: () {},
+                        child: Text(totalBudget == 0
+                            ? Strings.setBudget
+                            : Strings.editBudget),
+                        onPressed: () =>
+                            Navigator.of(context).pushNamed('/setBudget'),
                       ),
                     ],
                   )
@@ -67,18 +81,19 @@ class HolidayPlannersScreen extends StatelessWidget {
             const SizedBox(height: 16),
             CupertinoButton(
               padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-              color: Palette.bgSecondary,
+              color: reminderCount == 0
+                  ? Palette.bgSecondary
+                  : Palette.accentSecondaryBlue,
               borderRadius: BorderRadius.circular(12),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    Strings.urReminders,
-                  ),
+                  Text(
+                      '${Strings.urReminders} ${reminderCount != 0 ? '($reminderCount)' : ''}'),
                   SvgPicture.asset(Assets.icons.arrowRight.path),
                 ],
               ),
-              onPressed: () {},
+              onPressed: () => Navigator.of(context).pushNamed('/reminders'),
             ),
             const SizedBox(height: 20),
             const Text(
@@ -90,22 +105,33 @@ class HolidayPlannersScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 12),
-            Center(
-              child: Column(
-                children: [
-                  SvgPicture.asset(Assets.icons.empty.path),
-                  const SizedBox(height: 12),
-                  Text(
-                    Strings.noSuchEvents,
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Palette.sixtyPercWhite,
-                      fontWeight: FontWeight.w500,
+            expensions.isEmpty
+                ? Center(
+                    child: Column(
+                      children: [
+                        SvgPicture.asset(Assets.icons.empty.path),
+                        const SizedBox(height: 12),
+                        Text(
+                          Strings.noSuchEvents,
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Palette.sixtyPercWhite,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
                     ),
+                  )
+                : ListView.builder(
+                    itemBuilder: (context, index) {
+                      // return EventHistoryTile(
+                      //   title: 'Jimmy birthday',
+                      //   cost: '1600',
+                      //   date: DateTime(2025, 3),
+                      // );
+                      //TODO: сделать отображение тайлов
+                    },
                   ),
-                ],
-              ),
-            ),
             const Expanded(child: SizedBox()),
             SizedBox(
               width: double.infinity,
@@ -120,6 +146,55 @@ class HolidayPlannersScreen extends StatelessWidget {
             const SizedBox(height: 20),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class EventHistoryTile extends StatelessWidget {
+  final String title;
+  final String cost;
+  final DateTime date;
+  const EventHistoryTile({
+    super.key,
+    required this.title,
+    required this.cost,
+    required this.date,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return OutlinedCupertinoButton(
+      onPressed: () {},
+      borders: Border.all(color: Palette.primaryBlue, width: 2),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: const TextStyle(fontSize: 16),
+              ),
+              RichText(
+                text: TextSpan(
+                    style: const TextStyle(
+                        fontSize: 16, fontWeight: FontWeight.w500),
+                    children: [
+                      TextSpan(
+                          text: '\$',
+                          style: TextStyle(color: Palette.sixtyPercWhite)),
+                      TextSpan(text: cost),
+                    ]),
+              ),
+            ],
+          ),
+          Text(
+            DateFormat('MMMM d, yyyy').format(date),
+            style: TextStyle(color: Palette.sixtyPercWhite, fontSize: 12),
+          )
+        ],
       ),
     );
   }

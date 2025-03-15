@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gift_fund/src/features/main/screens/budget_set_screen.dart';
 import 'package:gift_fund/src/features/main/screens/main_screen.dart';
 import 'package:gift_fund/src/features/reminders/reminders_screen.dart';
 
@@ -17,6 +18,7 @@ class MyApp extends StatelessWidget {
       routes: {
         "/": (ctx) => const MainScreen(),
         "/reminders": (ctx) => const RemindersScreen(),
+        "/setBudget": (ctx) => const BudgetSetScreen(),
       },
     );
   }

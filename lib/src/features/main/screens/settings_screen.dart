@@ -1,7 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gift_fund/src/common/palette.dart';
 import 'package:gift_fund/src/common/strings.dart';
+import 'package:gift_fund/src/features/main/widgets/outlined_cupertino_button.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -26,56 +26,41 @@ class SettingsScreen extends StatelessWidget {
           children: [
             const SizedBox(height: 32),
             OutlinedCupertinoButton(
-              text: Strings.privacyPolicy,
+              borders: Border.all(
+                color: Palette.accentSecondaryBlue,
+                width: 2,
+              ),
               onPressed: () {},
+              child: const Text(Strings.privacyPolicy),
             ),
             const SizedBox(height: 12),
             OutlinedCupertinoButton(
-              text: Strings.termsOfUse,
+              borders: Border.all(
+                color: Palette.accentSecondaryBlue,
+                width: 2,
+              ),
               onPressed: () {},
+              child: const Text(Strings.termsOfUse),
             ),
             const SizedBox(height: 12),
             OutlinedCupertinoButton(
-              text: Strings.support,
+              borders: Border.all(
+                color: Palette.accentSecondaryBlue,
+                width: 2,
+              ),
               onPressed: () {},
+              child: const Text(Strings.support),
             ),
             const SizedBox(height: 12),
             OutlinedCupertinoButton(
-              text: Strings.share,
+              borders: Border.all(
+                color: Palette.accentSecondaryBlue,
+                width: 2,
+              ),
               onPressed: () {},
+              child: const Text(Strings.share),
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class OutlinedCupertinoButton extends StatelessWidget {
-  final String text;
-  final VoidCallback onPressed;
-  const OutlinedCupertinoButton({
-    super.key,
-    required this.text,
-    required this.onPressed,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        border: Border.all(color: Palette.accentSecondaryBlue, width: 2),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: SizedBox(
-        width: double.infinity,
-        child: CupertinoButton(
-          alignment: Alignment.centerLeft,
-          color: Colors.transparent,
-          padding: const EdgeInsets.symmetric(vertical: 17, horizontal: 12),
-          borderRadius: BorderRadius.circular(20),
-          onPressed: onPressed,
-          child: Text(text),
         ),
       ),
     );

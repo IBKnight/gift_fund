@@ -1,38 +1,38 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gift_fund/src/common/palette.dart';
 
 class BudgetIndicator extends StatelessWidget {
   final int budget;
-  final int currentBudget;
+  final int expenses;
   const BudgetIndicator({
     super.key,
     required this.budget,
-    required this.currentBudget,
+    required this.expenses,
   });
 
   @override
   Widget build(BuildContext context) {
-    final double percentage = currentBudget / budget;
+    final double percentage = (budget != 0) ? expenses / budget : 0;
     return Stack(
       alignment: Alignment.center,
       children: [
         SizedBox(
-          width: 100, // Увеличиваем размер
+          width: 100,
           height: 100,
           child: CircularProgressIndicator(
-            backgroundColor: Palette.circularIndicatorBg,
             strokeWidth: 12, // Толщина линии
-            value: (currentBudget > 0) ? percentage : 1,
-            color: (currentBudget > 0)
-                ? Palette.accentGreen
-                : Palette.accentRed, // Цвет
+            value: (expenses > 0) ? percentage : 1,
+            color: budget == 0
+                ? Palette.circularIndicatorBg
+                : (budget - expenses > 0)
+                    ? Palette.accentGreen
+                    : Palette.accentRed, // Цвет
           ),
         ),
         // Текст в центре
         Text(
-          "\$ $currentBudget",
-          style: TextStyle(
+          "\$ ${drawBalance()}",
+          style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,
             color: Colors.white,
@@ -40,5 +40,11 @@ class BudgetIndicator extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  int drawBalance() {
+    if (budget == 0) return 0;
+
+    return budget - expenses;
   }
 }

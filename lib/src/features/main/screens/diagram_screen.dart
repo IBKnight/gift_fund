@@ -1,4 +1,3 @@
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:gift_fund/src/common/palette.dart';
 import 'package:gift_fund/src/common/strings.dart';
